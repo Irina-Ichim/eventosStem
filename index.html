@@ -1,142 +1,167 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero Page - Logos Flotantes</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Page - Logos Dinámicos</title>
     <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/examples/js/controls/OrbitControls.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: radial-gradient(circle, #1a1a1a, #000);
-            color: white;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        h1 {
-            font-size: 3rem;
-            background: linear-gradient(90deg, #007bff, #00c6ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            z-index: 10;
-        }
-
-        p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-bottom: 2rem;
-            z-index: 10;
-        }
-
-        #canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-    </style>
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div id="canvas-container"></div>
-
-    <h1>FemCoders Club x Fundación ASTI</h1>
-    <p>Una nueva generación STEM está lista para despegar.</p>
+    <div class="hero-text">
+      <h1>FemCoders Club x Fundación ASTI</h1>
+      <p>Explorando una nueva generación STEM</p>
+      <button>Descubre la nueva generación de talentos</button>
+    </div>
+    <div id="menu-container">
+      <div class="menu-item" id="talento">
+        <canvas id="sphere-talento"></canvas>
+        <div class="label">Talento</div>
+      </div>
+      <div class="menu-item" id="certificado">
+        <canvas id="sphere-certificado"></canvas>
+        <div class="label">Certificado</div>
+      </div>
+    </div>
 
     <script>
-        // Configuración inicial de Three.js
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
+      const container = document.getElementById("canvas-container");
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
 
-        // Luz
-        const light = new THREE.PointLight(0xffffff, 1.5);
-        light.position.set(10, 10, 10);
+      // Luz
+      const light = new THREE.PointLight(0xffffff, 1.5);
+      light.position.set(10, 10, 10);
+      scene.add(light);
+
+      // Fondo de partículas
+      const particleCount = 500;
+      const particleGeometry = new THREE.BufferGeometry();
+      const particlePositions = [];
+      for (let i = 0; i < particleCount; i++) {
+        particlePositions.push((Math.random() - 0.5) * 50);
+        particlePositions.push((Math.random() - 0.5) * 50);
+        particlePositions.push((Math.random() - 0.5) * 50);
+      }
+      particleGeometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(particlePositions, 3)
+      );
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.1,
+      });
+      const particles = new THREE.Points(particleGeometry, particleMaterial);
+      scene.add(particles);
+
+      const logos = [
+        { url: "./assets/logofemCodersClub.png", position: [4, 3, -5] },
+        { url: "./assets/logoAsti.png", position: [-3, 3.5, -4] },
+      ];
+
+      logos.forEach((logo) => {
+        const textureLoader = new THREE.TextureLoader();
+        const logoTexture = textureLoader.load(logo.url);
+
+        // Esfera de fondo
+        const sphereGeometry = new THREE.SphereGeometry(1.5, 60, 60);
+        const sphereMaterial = new THREE.MeshStandardMaterial({
+          color: 0x007bff,
+          metalness: 0.8,
+          emissive: 0x000033,
+          transparent: true,
+          opacity: 0.9,
+        });
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+        // Logo en plano pequeño
+        const logoGeometry = new THREE.PlaneGeometry(2, 2);
+        const logoMaterial = new THREE.MeshBasicMaterial({
+          map: logoTexture,
+          transparent: true,
+        });
+        const logoPlane = new THREE.Mesh(logoGeometry, logoMaterial);
+
+        // Posicionar el logo ligeramente en frente de la esfera
+        logoPlane.position.set(0, 0, 1.51);
+        sphere.add(logoPlane);
+
+        // Posicionar la esfera en el espacio 3D
+        const [x, y, z] = logo.position;
+        sphere.position.set(x, y, z);
+
+        scene.add(sphere);
+
+        // Animación giratoria
+        const rotationSpeed = 0.02;
+        function rotate() {
+          sphere.rotation.y += rotationSpeed;
+          requestAnimationFrame(rotate);
+        }
+        rotate();
+      });
+
+      const createMenuSphere = (canvasId, color) => {
+        const canvas = document.getElementById(canvasId);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(80, 80);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 10);
+        camera.position.z = 5;
+
+        const sphereGeometry = new THREE.SphereGeometry(1.5, 60, 60);
+        const sphereMaterial = new THREE.MeshStandardMaterial({
+          color: color,
+          metalness: 0.8,
+          roughness: 0.5,
+          emissive: 0x333333,
+        });
+
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphere);
+
+        const light = new THREE.PointLight(0xffffff, 1);
+        light.position.set(5, 5, 5);
         scene.add(light);
 
-        // Fondo de partículas
-        const particleCount = 500;
-        const particleGeometry = new THREE.BufferGeometry();
-        const particlePositions = [];
-        for (let i = 0; i < particleCount; i++) {
-            particlePositions.push((Math.random() - 0.5) * 50);
-            particlePositions.push((Math.random() - 0.5) * 50);
-            particlePositions.push((Math.random() - 0.5) * 50);
-        }
-        particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlePositions, 3));
-        const particleMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
-        const particles = new THREE.Points(particleGeometry, particleMaterial);
-        scene.add(particles);
+        const animate = () => {
+          sphere.rotation.y += 0.01;
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+        };
 
-        // Planos con los logos
-        const logos = [
-            { url: './assets/logofemCodersClub.png', position: [2, 1, -5] },
-            { url: './assets/logoAsti.jpeg', position: [-3, 2, -4] },
-        ];
-
-        logos.forEach((logo) => {
-            const textureLoader = new THREE.TextureLoader();
-            const logoTexture = textureLoader.load(logo.url);
-            const logoMaterial = new THREE.MeshBasicMaterial({ map: logoTexture, transparent: true });
-            const logoGeometry = new THREE.PlaneGeometry(2, 1.5);
-            const logoMesh = new THREE.Mesh(logoGeometry, logoMaterial);
-            logoMesh.position.set(...logo.position);
-            scene.add(logoMesh);
-
-            // Animación de flotación
-            const floatSpeed = 0.5;
-            const initialY = logoMesh.position.y;
-            let direction = 1;
-
-            function float() {
-                logoMesh.position.y += direction * floatSpeed * 0.01;
-                if (logoMesh.position.y > initialY + 0.5 || logoMesh.position.y < initialY - 0.5) {
-                    direction *= -1;
-                }
-                requestAnimationFrame(float);
-            }
-            float();
-        });
-
-        // Cámara y controles
-        camera.position.set(0, 0, 10);
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-        // Animación de la escena
-        function animate() {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.001;
-            renderer.render(scene, camera);
-        }
         animate();
+      };
 
-        // Responsividad
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+      createMenuSphere("sphere-talento", 0x007bff);
+      createMenuSphere("sphere-certificado", 0xff5733);
+
+      // Animación de la escena principal
+      camera.position.set(0, 0, 10);
+      function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.001;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Responsividad
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
     </script>
-</body>
+  </body>
 </html>
-
-
-
