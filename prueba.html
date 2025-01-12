@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="1"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.04"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            position: relative;
+            margin-bottom: 4rem;
+            z-index: 3;
+        }
+
+        .title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            font-weight: 900;
+            background: linear-gradient(to right, #fff 20%, #666);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: #666;
+            max-width: 800px;
+        }
+
+        .showcase {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .talent-card {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            padding: 2rem;
+            background: linear-gradient(145deg, #111 0%, #0a0a0a 100%);
+            border-radius: 1rem;
+            border: 1px solid #222;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        .talent-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .talent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .talent-card:hover::before {
+            left: 100%;
+        }
+
+        .talent-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 1rem;
+            object-fit: cover;
+            margin-right: 2rem;
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+
+        .talent-card:hover .talent-image {
+            filter: grayscale(0%);
+        }
+
+        .talent-info {
+            flex-grow: 1;
+        }
+
+        .talent-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #fff, #ccc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .talent-role {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .role-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .talent-bio {
+            color: #999;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .talent-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Nuevos Talentos STEM</h1>
+            <p class="subtitle">femCodersClub en colaboración con fundación ASTI presenta una nueva generación de innovadores digitales que están transformando el futuro de la tecnología.</p>
+        </header>
+
+        <div class="showcase" id="showcase">
+            <article class="talent-card" data-index="0">
+                <img src="/api/placeholder/180/180" alt="Ana García" class="talent-image">
+                <div class="talent-info">
+                    <h2 class="talent-name">Ana García</h2>
+                    <div class="talent-role">
+                        <span class="role-tag">Frontend Developer</span>
+                        <span class="role-tag">UI/UX</span>
+                    </div>
+                    <p class="talent-bio">
+                        Especialista en crear experiencias web inmersivas y accesibles. 
+                        Apasionada por la intersección entre diseño y desarrollo, 
+                        con un enfoque en performance y animaciones fluidas.
+                    </p>
+                    <div class="talent-stats">
+                        <div class="stat">
+                            <span class="stat-value">4+</span>
+                            <span class="stat-label">Años exp.</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">15+</span>
+                            <span class="stat-label">Proyectos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">98%</span>
+                            <span class="stat-label">Satisfacción</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <div class="social-link">in</div>
+                        <div class="social-link">gh</div>
+                        <div class="social-link">tw</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="talent-card" data-index="1">
+                <!-- Contenido similar para María López -->
+                <img src="/api/placeholder/180/180" alt="María López" class="talent-image">
+                <div class="talent-info">
+                    <h2 class="talent-name">María López</h2>
+                    <div class="talent-role">
+                        <span class="role-tag">Data Scientist</span>
+                        <span class="role-tag">ML Engineer</span>
+                    </div>
+                    <p class="talent-bio">
+                        Investigadora y desarrolladora de soluciones de IA. 
+                        Enfocada en machine learning aplicado a problemas sociales 
+                        y mejora de procesos empresariales.
+                    </p>
+                    <div class="talent-stats">
+                        <div class="stat">
+                            <span class="stat-value">3+</span>
+                            <span class="stat-label">Años exp.</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">8+</span>
+                            <span class="stat-label">Papers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">12+</span>
+                            <span class="stat-label">Modelos ML</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <div class="social-link">in</div>
+                        <div class="social-link">gh</div>
+                        <div class="social-link">tw</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="talent-card" data-index="2">
+                <!-- Contenido similar para Laura Martín -->
+                <img src="/api/placeholder/180/180" alt="Laura Martín" class="talent-image">
+                <div class="talent-info">
+                    <h2 class="talent-name">Laura Martín</h2>
+                    <div class="talent-role">
+                        <span class="role-tag">DevOps Engineer</span>
+                        <span class="role-tag">Cloud Architect</span>
+                    </div>
+                    <p class="talent-bio">
+                        Experta en automatización y despliegue continuo. 
+                        Arquitecta de soluciones cloud-native con experiencia 
+                        en AWS y Azure. Defensora de las prácticas GitOps.
+                    </p>
+                    <div class="talent-stats">
+                        <div class="stat">
+                            <span class="stat-value">5+</span>
+                            <span class="stat-label">Años exp.</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">20+</span>
+                            <span class="stat-label">Pipelines</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">99.9%</span>
+                            <span class="stat-label">Uptime</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <div class="social-link">in</div>
+                        <div class="social-link">gh</div>
+                        <div class="social-link">tw</div>
+                    </div>
+                </div>
+            </article>
+            <article class="talent-card" data-index="0">
+                <img src="/api/placeholder/180/180" alt="Ana García" class="talent-image">
+                <div class="talent-info">
+                    <h2 class="talent-name">Ana García</h2>
+                    <div class="talent-role">
+                        <span class="role-tag">Frontend Developer</span>
+                        <span class="role-tag">UI/UX</span>
+                    </div>
+                    <p class="talent-bio">
+                        Especialista en crear experiencias web inmersivas y accesibles. 
+                        Apasionada por la intersección entre diseño y desarrollo, 
+                        con un enfoque en performance y animaciones fluidas.
+                    </p>
+                    <div class="talent-stats">
+                        <div class="stat">
+                            <span class="stat-value">4+</span>
+                            <span class="stat-label">Años exp.</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">15+</span>
+                            <span class="stat-label">Proyectos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">98%</span>
+                            <span class="stat-label">Satisfacción</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <div class="social-link">in</div>
+                        <div class="social-link">gh</div>
+                        <div class="social-link">tw</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        class CardShowcase {
+            constructor() {
+                this.cards = document.querySelectorAll('.talent-card');
+                this.currentIndex = 0;
+                this.cardHeight = 0;
+                this.animationDuration = 1000; // 1 segundo para la animación
+                this.displayDuration = 4000;   // 4 segundos mostrando cada tarjeta
+                
+                this.init();
+            }
+
+            init() {
+                // Posicionar las tarjetas inicialmente
+                this.cards.forEach((card, index) => {
+                    card.style.top = '100%';
+                    if (index === 0) {
+                        this.cardHeight = card.offsetHeight;
+                    }
+                });
+
+                // Iniciar la primera tarjeta
+                this.showNextCard();
+                
+                // Iniciar el ciclo de animación
+                setInterval(() => this.showNextCard(), this.displayDuration);
+            }
+
+            async showNextCard() {
+                // Ocultar la tarjeta actual si existe
+                if (this.cards[this.currentIndex]) {
+                    const currentCard = this.cards[this.currentIndex];
+                    await this.animateCard(currentCard, {
+                        from: { top: '0%', opacity: 1 },
+                        to: { top: '-100%', opacity: 0 }
+                    });
+                }
+
+                // Actualizar el índice
+                this.currentIndex = (this.currentIndex + 1) % this.cards.length;
+
+                // Mostrar la siguiente tarjeta
+                const nextCard = this.cards[this.currentIndex];
+                nextCard.style.top = '100%';
+                nextCard.style.opacity = '0';
+                
+                // Pequeña pausa antes de mostrar la siguiente tarjeta
+                setTimeout(() => {
+                    this.animateCard(nextCard, {
+                        from: { top: '100%', opacity: 0 },
+                        to: { top: '0%', opacity: 1 }
+                    });
+                }, 100);
+            }
+
+            animateCard(card, { from, to }) {
+                return new Promise(resolve => {
+                    card.style.transition = `all ${this.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                    
+                    // Establecer posición inicial
+                    Object.assign(card.style, from);
+                    
+                    // Forzar reflow
+                    card.offsetHeight;
+                    
+                    // Animar a la posición final
+                    Object.assign(card.style, to);
+                    
+                    setTimeout(resolve, this.animationDuration);
+                });
+            }
+        }
+
+        // Iniciar el showcase cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            new CardShowcase();
+        });
+    </script>
+</body>
+</html>

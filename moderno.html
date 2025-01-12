@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel 3D</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --carousel-radius: 500px;
+            --card-width: 150px;
+            --card-height: 250px;
+            --primary-color: #007bff;
+            --secondary-color: #00c6ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #1a1a1a, #000);
+            color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin: 2rem 0;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel {
+            position: relative;
+            width: var(--carousel-radius);
+            height: var(--carousel-radius);
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+
+        .carousel.paused {
+            animation-play-state: paused;
+        }
+
+        .talent-card {
+            position: absolute;
+            width: var(--card-width);
+            height: var(--card-height);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.2);
+        }
+
+        .talent-card:hover {
+            transform: scale(1.05) translateZ(50px);
+            box-shadow: 0 0 30px rgba(0, 123, 255, 0.4);
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 70%;
+            --poster-color: transparent;
+            background: transparent;
+        }
+
+        .talent-info {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .talent-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .talent-role {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .talent-quote {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .controls {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .control-btn {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 2rem;
+            background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 123, 255, 0.5);
+        }
+
+        .control-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">Carrusel 3D</h1>
+        <p class="subtitle">Descubre los nuevos talentos STEM en 3D</p>
+    </header>
+
+    <div class="controls">
+        <button class="control-btn" id="pauseBtn">Pausar</button>
+        <button class="control-btn" id="playBtn">Reanudar</button>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel" id="carousel"></div>
+    </div>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const playBtn = document.getElementById('playBtn');
+        
+        // Datos de los talentos
+        const talents = [
+            {
+                name: "Ana García",
+                role: "Frontend Developer",
+                quote: "Sueño con crear interfaces hermosas.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "María López",
+                role: "Data Scientist",
+                quote: "La ciencia de datos es mi pasión.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "Laura Martín",
+                role: "DevOps Engineer",
+                quote: "Automatizar es la clave del futuro.",
+                model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb"
+            },
+            
+            {
+                name: "Carmen Ruiz",
+                role: "AI Engineer",
+                quote: "Construyendo el futuro con IA.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+              
+            {
+                name: "Carmen Ruiz",
+                role: "AI Engineer",
+                quote: "Construyendo el futuro con IA.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "Sofia Torres",
+                role: "UX Designer",
+                quote: "Diseñando experiencias únicas.",
+                model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb"
+            },
+            {
+                name: "Ana García",
+                role: "Frontend Developer",
+                quote: "Sueño con crear interfaces hermosas.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "María López",
+                role: "Data Scientist",
+                quote: "La ciencia de datos es mi pasión.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "Laura Martín",
+                role: "DevOps Engineer",
+                quote: "Automatizar es la clave del futuro.",
+                model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb"
+            },
+            {
+                name: "Carmen Ruiz",
+                role: "AI Engineer",
+                quote: "Construyendo el futuro con IA.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "Sofia Torres",
+                role: "UX Designer",
+                quote: "Diseñando experiencias únicas.",
+                model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb"
+            },
+            {
+                name: "Ana García",
+                role: "Frontend Developer",
+                quote: "Sueño con crear interfaces hermosas.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "María López",
+                role: "Data Scientist",
+                quote: "La ciencia de datos es mi pasión.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "Laura Martín",
+                role: "DevOps Engineer",
+                quote: "Automatizar es la clave del futuro.",
+                model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb"
+            },
+            {
+                name: "Carmen Ruiz",
+                role: "AI Engineer",
+                quote: "Construyendo el futuro con IA.",
+                model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb"
+            },
+            {
+                name: "Sofia Torres",
+                role: "UX Designer",
+                quote: "Diseñando experiencias únicas.",
+                model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb"
+            }
+
+        ];
+
+        // Crear las tarjetas y posicionarlas en círculo
+        talents.forEach((talent, index) => {
+            const card = document.createElement('div');
+            card.className = 'talent-card';
+            
+            const angle = (index / talents.length) * 2 * Math.PI;
+            const radius = 500; // Radio del círculo
+            
+            // Posicionar en círculo usando seno y coseno
+            card.style.transform = `
+                rotateY(${(index / talents.length) * 360}deg)
+                translateZ(${radius}px)
+            `;
+
+            card.innerHTML = `
+                <model-viewer
+                    src="${talent.model}"
+                    alt="${talent.name}"
+                    camera-controls
+                    auto-rotate
+                    style="background-color: transparent;">
+                </model-viewer>
+                <div class="talent-info">
+                    <h2 class="talent-name">${talent.name}</h2>
+                    <p class="talent-role">${talent.role}</p>
+                    <p class="talent-quote">"${talent.quote}"</p>
+                </div>
+            `;
+
+            carousel.appendChild(card);
+        });
+
+        // Controles de pausa/reproducción
+        pauseBtn.addEventListener('click', () => {
+            carousel.classList.add('paused');
+        });
+
+        playBtn.addEventListener('click', () => {
+            carousel.classList.remove('paused');
+        });
+    </script>
+</body>
+</html>

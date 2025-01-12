@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diplomas en Grid con Modelos 3D</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+            color: #333;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .diploma-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .diploma-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 200px;
+            background: transparent;
+        }
+
+        .name {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #2c3e50;
+        }
+
+        .role {
+            text-align: center;
+            font-size: 1rem;
+            color: #555;
+            margin-top: 0.5rem;
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Diplomas de Reconocimiento</h1>
+    <div class="grid-container" id="gridContainer"></div>
+
+    <script>
+        const guests = [
+            { name: "Ana García", role: "Frontend Developer", quote: "Construyendo interfaces del futuro.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "María López", role: "Data Scientist", quote: "Explorando el poder de los datos.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "Laura Martín", role: "DevOps Engineer", quote: "Automatizando el mañana.", model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb" },
+            { name: "Carmen Ruiz", role: "AI Engineer", quote: "Creando inteligencia para el futuro.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "Sofía Torres", role: "UX Designer", quote: "Diseñando experiencias únicas.", model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb" },
+            { name: "Luis Pérez", role: "Backend Developer", quote: "Optimizando sistemas y procesos.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "Elena Díaz", role: "Cybersecurity Analyst", quote: "Protegiendo el mundo digital.", model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb" },
+            { name: "Ana García", role: "Frontend Developer", quote: "Construyendo interfaces del futuro.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "María López", role: "Data Scientist", quote: "Explorando el poder de los datos.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "Laura Martín", role: "DevOps Engineer", quote: "Automatizando el mañana.", model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb" },
+            { name: "Carmen Ruiz", role: "AI Engineer", quote: "Creando inteligencia para el futuro.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "Sofía Torres", role: "UX Designer", quote: "Diseñando experiencias únicas.", model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb" },
+            { name: "Luis Pérez", role: "Backend Developer", quote: "Optimizando sistemas y procesos.", model: "https://models.readyplayer.me/6782685f2e7fac7574526ff8.glb" },
+            { name: "Elena Díaz", role: "Cybersecurity Analyst", quote: "Protegiendo el mundo digital.", model: "https://models.readyplayer.me/678269a63b064b4dff1ad793.glb" }
+        ];
+
+        const gridContainer = document.getElementById("gridContainer");
+
+        guests.forEach(guest => {
+            const card = document.createElement("div");
+            card.classList.add("diploma-card");
+
+            card.innerHTML = `
+                <model-viewer 
+                    src="${guest.model}" 
+                    alt="${guest.name}" 
+                    camera-controls 
+                    auto-rotate>
+                </model-viewer>
+                <h2 class="name">${guest.name}</h2>
+                <p class="role">${guest.role}</p>
+                <p class="quote">"${guest.quote}"</p>
+            `;
+
+            gridContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>
+
