@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hero Page - Logos Dinámicos</title>
+    <title>Hero Page</title>
     <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/build/three.min.js"></script>
-
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
     <div id="canvas-container"></div>
@@ -27,6 +26,15 @@
     </div>
 
     <script>
+      
+  document.getElementById("talento").addEventListener("click", () => {
+    window.location.href = "./html/talento.html"; 
+  });
+
+  document.getElementById("certificado").addEventListener("click", () => {
+    window.location.href = "./html/diploma.html"; 
+  });
+
       const container = document.getElementById("canvas-container");
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
@@ -39,13 +47,17 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       container.appendChild(renderer.domElement);
 
-      // Luz
+      const getCSSColor = (variable) =>
+        getComputedStyle(document.documentElement)
+          .getPropertyValue(variable)
+          .trim();
+
       const light = new THREE.PointLight(0xffffff, 1.5);
       light.position.set(10, 10, 10);
       scene.add(light);
 
       // Fondo de partículas
-      const particleCount = 500;
+      const particleCount = 1500;
       const particleGeometry = new THREE.BufferGeometry();
       const particlePositions = [];
       for (let i = 0; i < particleCount; i++) {
@@ -65,8 +77,8 @@
       scene.add(particles);
 
       const logos = [
-        { url: "./assets/logofemCodersClub.png", position: [4, 3, -5] },
-        { url: "./assets/logoAsti.png", position: [-3, 3.5, -4] },
+        { url: "./assets/logofemCodersClub.png", position: [4, 1.5, -5] },
+        { url: "./assets/logoAsti.png", position: [-3, 2, -4] },
       ];
 
       logos.forEach((logo) => {
@@ -76,9 +88,9 @@
         // Esfera de fondo
         const sphereGeometry = new THREE.SphereGeometry(1.5, 60, 60);
         const sphereMaterial = new THREE.MeshStandardMaterial({
-          color: 0x007bff,
+          color: new THREE.Color(getCSSColor("--primary-color")),
           metalness: 0.8,
-          emissive: 0x000033,
+          emissive: new THREE.Color(getCSSColor("--bg-dark")),
           transparent: true,
           opacity: 0.9,
         });
@@ -92,7 +104,6 @@
         });
         const logoPlane = new THREE.Mesh(logoGeometry, logoMaterial);
 
-        // Posicionar el logo ligeramente en frente de la esfera
         logoPlane.position.set(0, 0, 1.51);
         sphere.add(logoPlane);
 
@@ -102,7 +113,6 @@
 
         scene.add(sphere);
 
-        // Animación giratoria
         const rotationSpeed = 0.02;
         function rotate() {
           sphere.rotation.y += rotationSpeed;
@@ -111,7 +121,7 @@
         rotate();
       });
 
-      const createMenuSphere = (canvasId, color) => {
+      const createMenuSphere = (canvasId, colorVariable) => {
         const canvas = document.getElementById(canvasId);
         const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
         renderer.setSize(80, 80);
@@ -122,10 +132,11 @@
 
         const sphereGeometry = new THREE.SphereGeometry(1.5, 60, 60);
         const sphereMaterial = new THREE.MeshStandardMaterial({
-          color: color,
+          color: new THREE.Color(getCSSColor("--primary-color")),
           metalness: 0.8,
-          roughness: 0.5,
-          emissive: 0x333333,
+          emissive: new THREE.Color(getCSSColor("--bg-dark")),
+          transparent: true,
+          opacity: 0.9,
         });
 
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -144,10 +155,9 @@
         animate();
       };
 
-      createMenuSphere("sphere-talento", 0x007bff);
-      createMenuSphere("sphere-certificado", 0xff5733);
+      createMenuSphere("sphere-talento", "--soft-bg");
+      createMenuSphere("sphere-certificado", "--soft-bg-dark");
 
-      // Animación de la escena principal
       camera.position.set(0, 0, 10);
       function animate() {
         requestAnimationFrame(animate);
@@ -156,7 +166,6 @@
       }
       animate();
 
-      // Responsividad
       window.addEventListener("resize", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
