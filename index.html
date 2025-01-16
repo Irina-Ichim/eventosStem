@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hero Page</title>
+    <title>Iniciate en la programación con femCoders Club</title>
     <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/build/three.min.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
@@ -11,8 +11,11 @@
     <div id="canvas-container"></div>
     <div class="hero-text">
       <h1>FemCoders Club x Fundación ASTI</h1>
-      <p>Explorando una nueva generación STEM</p>
-      <button>Descubre la nueva generación de talentos</button>
+      <p>Da vida a tu talento STEM, explorando un mundo lleno de posibilidades, creatividad y aprendizaje que te permitirá destacar como la próxima generación de innovadoras tecnológicas.</p>
+      <a href="./html/landingPage.html">
+        <button>Descubre la nueva generación de talentos</button>
+    </a>
+    
     </div>
     <div id="menu-container">
       <div class="menu-item" id="talento">
@@ -90,7 +93,7 @@
         const sphereMaterial = new THREE.MeshStandardMaterial({
           color: new THREE.Color(getCSSColor("--primary-color")),
           metalness: 0.8,
-          emissive: new THREE.Color(getCSSColor("--bg-dark")),
+          emissive: new THREE.Color(getCSSColor("--secondary-color")),
           transparent: true,
           opacity: 0.9,
         });
@@ -132,9 +135,9 @@
 
         const sphereGeometry = new THREE.SphereGeometry(1.5, 60, 60);
         const sphereMaterial = new THREE.MeshStandardMaterial({
-          color: new THREE.Color(getCSSColor("--primary-color")),
+          color: new THREE.Color(getCSSColor("--secondary-color")),
           metalness: 0.8,
-          emissive: new THREE.Color(getCSSColor("--bg-dark")),
+          emissive: new THREE.Color(getCSSColor("--primary-color")),
           transparent: true,
           opacity: 0.9,
         });

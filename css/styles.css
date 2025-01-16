@@ -56,8 +56,9 @@ h1 {
 
 p {
   font-size: 1.2rem;
+  text-align: center;
   opacity: 0;
-  margin-bottom: 2rem;
+  margin: 0 10% 2rem;
   z-index: 10;
   animation: rotate3d 2s ease-out forwards;
   animation-delay: 1s;

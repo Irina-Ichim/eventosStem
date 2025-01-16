@@ -1,272 +1,380 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --primary-color: #FF69B4;   
-    --secondary-color: #9932CC;   
-    --accent-color: #ff69b4;
-    --bg-dark: #191970;
-    --bg-darker: #0f052c;
-    --soft-primary: #b19cd9;
-    --soft-accent: #87cefa;
-    --soft-bg: #ff69b4;
-    --soft-bg-dark: #9932cc;
+  --primary-color: #ff69b4;
+  --secondary-color: #9932cc;
+  --bg-light: #f0f0f0;
+  --bg-dark: #191970;
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: radial-gradient(circle, var(--bg-dark), var(--bg-darker));
-    color: white;
-    min-height: 100vh;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--bg-light) 0%,
+    var(--secondary-color) 100%
+  );
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .diploma-container {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    padding: 3rem;
-    background: rgba(255, 255, 255, 0.1);
-    -webkit-backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
-    overflow: hidden;
-} 
+  background: white;
+  border-radius: 25px;
+  padding: 3rem;
+  box-shadow: 0 10px 20px rgba(153, 50, 204, 0.2),
+    0 0 40px rgba(255, 105, 180, 0.15);
+  max-width: 1200px;
+  width: 95%;
+  position: relative;
+  overflow: hidden;
+}
 
+.diploma-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+}
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
 }
-
 
 .seal-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    animation: sealRotate 20s linear infinite;
+  width: 120px;
+  height: 120px;
+  animation: sealRotate 20s linear infinite;
 }
 
- .seal {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
-} 
-
+.seal {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+}
 
 .seal::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
 }
 
 .seal::after {
-    content: '★';
-    font-size: 3rem;
-    color: white;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  content: "★";
+  font-size: 2.5rem;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
-
-@keyframes sealRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 
 .logos-container {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
-    transition: transform 0.3s ease;
+  width: 100px;
+  height: auto;
+  transition: transform 0.3s ease;
 }
 
 .logo:hover {
-    transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 h1 {
-    text-align: center;
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 800;
-    background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 2rem 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    animation: titleGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-    from {
-        text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
-    }
-    to {
-        text-shadow: 0 0 30px rgba(153, 50, 204, 0.7);
-    }
+  font-size: 3rem;
+  text-align: center;
+  background: linear-gradient(
+    145deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 2rem 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  animation: titleGlow 2s ease-in-out infinite alternate;
 }
 
 .certificate-text {
-    font-size: 1.4rem;
-    text-align: center;
-    line-height: 1.8;
-    margin: 2rem 0;
-    color: rgba(255, 255, 255, 0.9);
+  font-size: 1.3rem;
+  line-height: 1.8;
+  text-align: center;
+  color: var(--bg-dark);
+  margin: 2rem 0;
+  padding: 0 2rem;
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 2rem;
+  margin: 3rem 0;
+  width: 100%;
 }
 
-.participant-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 1rem;
-    transition: all 0.3s ease;
+.talent-card {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 20px rgba(153, 50, 204, 0.2),
+    0 0 40px rgba(255, 105, 180, 0.15);
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.participant-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
-    border-color: var(--primary-color);
+.talent-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.talent-card:hover {
+  transform: translateY(-8px);
+}
+
+.talent-card:hover::before {
+  opacity: 1;
 }
 
 model-viewer {
-    width: 100%;
-    height: 200px;
-    --poster-color: transparent;
-    background: transparent;
+  width: 100%;
+  height: 180px;
+  --poster-color: transparent;
+  background: transparent;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-.participant-name {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
+.talent-info {
+  padding: 1.5rem;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(240, 240, 240, 0.5) 100%
+  );
+  border-radius: 15px;
+  transition: transform 0.3s ease;
 }
 
-.participant-role {
-    font-size: 1rem;
-    color: var(--soft-primary);
-    text-align: center;
-    margin-top: 0.5rem;
+.talent-card:hover .talent-info {
+  transform: translateY(-5px);
+}
+
+.talent-name {
+  font-size: 1.3rem;
+  color: var(--bg-dark);
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.talent-role {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.talent-role::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  transition: width 0.3s ease;
+}
+
+.talent-card:hover .talent-role::after {
+  width: 80%;
+}
+
+.talent-quote {
+  position: relative;
+  font-style: italic;
+  color: var(--bg-dark);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding: 0.5rem 1rem;
+}
+
+.talent-quote::before,
+.talent-quote::after {
+  content: '"';
+  position: absolute;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+.talent-quote::before {
+  left: 0;
+  top: 0;
+}
+
+.talent-quote::after {
+  right: 0;
+  bottom: 0;
 }
 
 .signatures {
-    display: flex;
-    justify-content: space-around;
-    margin: 3rem 0;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 4rem;
+  gap: 3rem;
 }
 
 .signature {
-    text-align: center;
-    padding: 1rem;
-    flex: 1;
-    max-width: 300px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  flex: 1;
+  max-width: 300px;
+  padding: 1.5rem;
+  background: var(--bg-light);
+  border-radius: 10px;
 }
 
 .signature-line {
-    width: 80%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    margin: 1rem auto;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  margin: 1rem 0;
 }
 
 .signature-name {
-    font-weight: bold;
-    margin-top: 0.5rem;
-    color: var(--soft-primary);
-}
-
-.signature-title {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  color: var(--bg-dark);
+  font-size: 1.1rem;
 }
 
 .date {
-    text-align: center;
-    font-size: 1.2rem;
-    margin: 2rem 0;
-    color: var(--soft-accent);
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--bg-dark);
+  margin: 3rem 0;
+  font-weight: 500;
 }
 
 .disclaimer {
-    font-size: 0.8rem;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 2rem;
-    padding: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--bg-dark);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bg-light);
+}
+
+@keyframes sealRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes titleGlow {
+  from {
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+  }
+  to {
+    text-shadow: 0 0 30px rgba(153, 50, 204, 0.7);
+  }
 }
 
 @media (max-width: 768px) {
-    .diploma-container {
-        padding: 1.5rem;
-    }
+  .diploma-container {
+    padding: 2rem 1rem;
+  }
 
-    h1 {
-        font-size: 2rem;
-    }
+  h1 {
+    font-size: 2.5rem;
+  }
 
-    .grid-container {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
 
-    .signatures {
-        flex-direction: column;
-        gap: 1rem;
-    }
+  .certificate-text {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
 
-    .signature {
-        max-width: 100%;
-    }
+  .signatures {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
 }
