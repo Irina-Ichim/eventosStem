@@ -14,7 +14,7 @@ body {
   justify-content: center;
   height: 100vh;
   margin: 0;
-overflow: hidden;
+  overflow: hidden;
 }
 
 .header {
@@ -51,7 +51,6 @@ overflow: hidden;
   justify-content: center;
   align-items: center;
   margin-bottom: 400px;
- 
 }
 
 .carousel {
@@ -59,12 +58,12 @@ overflow: hidden;
   width: var(--carousel-radius);
   height: var(--carousel-radius);
   transform-style: preserve-3d;
- 
+  transform-origin: center center;
 }
 
 .talent-card {
   position: absolute;
-  width: 200px;
+  width: 220px;
   height: 320px;
   background: rgba(255, 255, 255, 0.15);
   -webkit-backdrop-filter: blur(10px);

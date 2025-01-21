@@ -182,7 +182,7 @@ body {
 .talent-card {
   position: absolute;
   width: 200px;
-  height: 370px;
+  height: 350px;
   background: rgba(255, 255, 255, 0.15);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -193,6 +193,7 @@ body {
   transition: transform 0.5s ease-out;
   display: flex;
   flex-direction: column;
+  
 }
 
 .talent-card:hover {
@@ -211,7 +212,7 @@ model-viewer {
 
 .talent-info {
   flex-grow: 1;
-  padding: 1rem;
+  padding: 1.5rem;
   background: linear-gradient(145deg, #ff69b4, #9932cc);
   display: flex;
   flex-direction: column;
@@ -221,7 +222,34 @@ model-viewer {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--bg-light);
 }
-
+.talent-name{
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: var(--bg-light);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.4rem;
+}
+.talent-role{
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: var(--bg-dark);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+.talent-quote{
+  font-size: 0.8rem;
+  font-style: italic;
+  background: var(--bg-light);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
 .about {
   padding: 6rem 2rem;
   background: var(--gradient-primary);

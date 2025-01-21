@@ -7,7 +7,7 @@ let isPaused = false;
 let angle = 0;
 let currentGroupIndex = 0;
 
-const groupSize = 20;
+const groupSize = 19;
 const totalGroups = Math.ceil(cards.length / groupSize);
 
 const positionCards = (groupIndex) => {
@@ -19,7 +19,6 @@ const positionCards = (groupIndex) => {
     card.style.display = "none";
   });
 
-  // Mostrar y posicionar las tarjetas del grupo actual
   for (let i = 0; i < groupSize; i++) {
     const cardIndex = (groupIndex * groupSize + i) % totalCards;
     const card = cards[cardIndex];
