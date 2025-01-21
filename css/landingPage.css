@@ -1,16 +1,13 @@
 :root {
-  /* Paleta principal modernizada */
   --primary-color: #ff69b4;
   --primary-dark: #d44b98;
   --secondary-color: #8a2be2;
   --secondary-dark: #6a1cb2;
   --accent-color: #ffd700;
 
-  /* Backgrounds */
   --bg-light: #f8f9fa;
   --bg-dark: #191970;
 
-  /* Gradientes predefinidos */
   --gradient-primary: linear-gradient(
     145deg,
     var(--primary-color),
@@ -22,12 +19,10 @@
     var(--secondary-dark)
   );
 
-  /* Sombras */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 
-  /* Transiciones */
   --transition-fast: 0.3s ease;
   --transition-slow: 0.5s ease;
 }
@@ -46,7 +41,6 @@ body {
   background-color: var(--bg-light);
 }
 
-/* Navigation */
 .nav {
   position: fixed;
   top: 0;
@@ -82,13 +76,12 @@ body {
   border-bottom-color: var(--primary-color);
 }
 
-/* Hero Section  */
 .hero {
   min-height: 100vh;
   background: radial-gradient(
     circle at center,
     var(--bg-light) 0%,
-    rgba(138, 43, 226, 0.2) 100%
+    rgba(217, 46, 223, 0.871) 100%
   );
   display: flex;
   flex-direction: column;
@@ -147,7 +140,6 @@ body {
   opacity: 0.9;
 }
 
-/* Botón CTA */
 .cta-button {
   padding: 1.2rem 3rem;
   font-size: 1.1rem;
@@ -169,7 +161,6 @@ body {
   background: var(--gradient-dark);
 }
 
-/* Carrusel */
 .carousel-container {
   position: relative;
   width: 100%;
@@ -191,7 +182,7 @@ body {
 .talent-card {
   position: absolute;
   width: 200px;
-  height: 320px;
+  height: 370px;
   background: rgba(255, 255, 255, 0.15);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -231,7 +222,6 @@ model-viewer {
   color: var(--bg-light);
 }
 
-/* About Section */
 .about {
   padding: 6rem 2rem;
   background: var(--gradient-primary);
@@ -281,7 +271,6 @@ model-viewer {
   box-shadow: var(--shadow-lg);
 }
 
-/* Footer  */
 .footer {
   background: var(--bg-dark);
   color: white;
@@ -394,7 +383,6 @@ model-viewer {
   z-index: 1;
 }
 
-/* Contenedor para los enlaces sociales */
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -403,7 +391,6 @@ model-viewer {
   align-items: center;
 }
 
-/* Separador decorativo */
 .footer-separator {
   width: 50%;
   height: 1px;
@@ -416,7 +403,6 @@ model-viewer {
   margin: 2rem auto;
 }
 
-/* Controles */
 .controls {
   display: flex;
   justify-content: center;
@@ -445,7 +431,6 @@ model-viewer {
 - Laptop: 769px - 1024px
 - Desktop: 1025px+ */
 
-/* Tablet y dispositivos más pequeños */
 @media screen and (max-width: 768px) {
   .nav-links {
     flex-direction: column;
@@ -495,7 +480,7 @@ model-viewer {
   }
 }
 
-/* Mobile específico */
+/* Móviles */
 @media screen and (max-width: 480px) {
   .nav {
     padding: 0.5rem;
@@ -541,7 +526,6 @@ model-viewer {
   }
 }
 
-/* Para pantallas muy pequeñas */
 @media screen and (max-width: 320px) {
   .talent-card {
     width: 120px;
@@ -562,7 +546,6 @@ model-viewer {
   }
 }
 
-/* Para tablets en modo landscape y laptops pequeñas */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .hero-content {
     max-width: 600px;
@@ -577,14 +560,12 @@ model-viewer {
   }
 }
 
-/* Para asegurar que el navbar sea responsive en dispositivos con notch */
 @media screen and (max-width: 768px) and (orientation: landscape) {
   .nav {
     padding-top: env(safe-area-inset-top);
   }
 }
 
-/* Soporte para dispositivos con dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-light: #1a1a1a;
@@ -612,7 +593,6 @@ model-viewer {
   }
 }
 
-/* Soporte para usuarios que prefieren menos movimiento */
 @media (prefers-reduced-motion: reduce) {
   .hero::before,
   .talent-card,

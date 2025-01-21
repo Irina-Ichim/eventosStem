@@ -193,7 +193,7 @@ button:active {
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   p {
@@ -206,9 +206,9 @@ button:active {
   }
 
   #menu-container {
-    top: 25%;
+    top: 10%;
     right: 0.5rem;
-    gap: 0.8rem;
+    gap: 0.7rem;
   }
 
   .menu-item {
@@ -219,5 +219,9 @@ button:active {
   .label {
     font-size: 0.8rem;
     padding: 0.3rem 0.6rem;
+  }
+  #menu-container .menu-item canvas {
+    width: 70px !important;
+    height: 70px !important;
   }
 }
